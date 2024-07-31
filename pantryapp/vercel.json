@@ -1,5 +1,1 @@
-{
-"routes": [
-    { "src": "/(.*)", "dest": "/app/pages.js" }
-  ]
-}
+{ "rewrites": [{ "source": "/(.*)", "destination": "/app/pages.js" }] }
