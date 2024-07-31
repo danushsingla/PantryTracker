@@ -1,4 +1,3 @@
-'use client'
 import React, { forwardRef } from 'react'
 import {useState} from 'react'
 import { Box, Stack, Typography, Button, Modal, TextField, Popper, Snackbar} from "@mui/material"
