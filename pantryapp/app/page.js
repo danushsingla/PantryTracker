@@ -2,7 +2,8 @@
 import { Box, Stack, Typography, Button, Modal, TextField } from "@mui/material"
 import {firestore} from '@/app/firebase'
 import {collection} from 'firebase/firestore'
-import React, {useEffect, useState} from 'react'
+import { MyProvider } from './MyContext';
+import React, {useEffect, useState, createContext, useRef} from 'react'
 import {doc, getDocs, query, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
 import { PoppupSearchBox } from "@/app/popup"
 
@@ -22,6 +23,7 @@ const style = {
 };
 
 export default function Home() {
+  const context = createContext()
   const [pantry, setPantry] = useState([])
 
   const [openAdd, setOpenAdd] = useState(false);
@@ -32,6 +34,8 @@ export default function Home() {
   const handleOpenSearch = () => setOpenSearch(true);
   const handleCloseSearch = () => setOpenSearch(false);
 
+  const ref = useRef(null)
+
   const [itemName, setItemName] = useState('')
 
   const updatePantry = async () => {
@@ -41,7 +45,6 @@ export default function Home() {
     docs.forEach((doc) => {
       pantryList.push({name: doc.id, ...doc.data()})
     })
-    console.log(pantryList)
     setPantry(pantryList)
   }
 
@@ -127,7 +130,7 @@ export default function Home() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <PoppupSearchBox handleCloseSearch={handleCloseSearch}/>
+          <PoppupSearchBox handleCloseSearch={handleCloseSearch} ref={ref}/>
         </Modal>
         <Button variant="contained"
           onClick={handleOpenSearch}
