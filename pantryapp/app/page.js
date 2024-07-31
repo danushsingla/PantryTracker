@@ -34,8 +34,6 @@ export default function Home() {
   const handleOpenSearch = () => setOpenSearch(true);
   const handleCloseSearch = () => setOpenSearch(false);
 
-  const ref = useRef(null)
-
   const [itemName, setItemName] = useState('')
 
   const updatePantry = async () => {
@@ -130,7 +128,7 @@ export default function Home() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <PoppupSearchBox handleCloseSearch={handleCloseSearch} ref={ref}/>
+          <PoppupSearchBox handleCloseSearch={handleCloseSearch}/>
         </Modal>
         <Button variant="contained"
           onClick={handleOpenSearch}

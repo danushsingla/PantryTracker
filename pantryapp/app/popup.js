@@ -18,13 +18,11 @@ const style = {
     p: 4,
 };
 
-export const PoppupSearchBox = forwardRef(function PoppupSearchBox({handleCloseSearch}, ref) {
+export const PoppupSearchBox = (function PoppupSearchBox({handleCloseSearch}) {
     const [itemName, setItemName] = useState('');
     const [pantry, setPantry] = useState([])
     const [openError, setOpenError] = useState(false)
     const handleErrorClose = () => setOpenError(false);
-
-    console.log(ref)
 
     const searchItem = async (item) => {
         try{
