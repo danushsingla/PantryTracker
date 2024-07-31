@@ -1,3 +1,4 @@
+"use client"
 import React, { forwardRef, useContext, useRef, useState } from 'react'
 import { Box, Stack, Typography, Button, Modal, TextField, Popper, Snackbar} from "@mui/material"
 import {firestore} from '@/app/firebase'
@@ -18,7 +19,7 @@ const style = {
     p: 4,
 };
 
-export const PoppupSearchBox = (function PoppupSearchBox({handleCloseSearch}) {
+export const PoppupSearchBox = ({handleCloseSearch}) => {
     const [itemName, setItemName] = useState('');
     const [pantry, setPantry] = useState([])
     const [openError, setOpenError] = useState(false)
@@ -140,7 +141,7 @@ export const PoppupSearchBox = (function PoppupSearchBox({handleCloseSearch}) {
         <Button variant="contained" onClick={handleCloseSearch}>Close</Button>
     </Box>
     )
-});
+};
 
 PoppupSearchBox.displayName = 'PoppupSearchBox';
 export default PoppupSearchBox;
