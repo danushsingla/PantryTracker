@@ -4,7 +4,7 @@ import {firestore} from '@/firebase'
 import {collection} from 'firebase/firestore'
 import React, {useEffect, useState} from 'react'
 import {doc, getDocs, query, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
-import { PoppupSearchBox } from "@/popup"
+import { PoppupSearchBox } from "@/app/popup"
 
 const style = {
   position: 'absolute',
