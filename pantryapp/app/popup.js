@@ -145,4 +145,5 @@ export const PoppupSearchBox = forwardRef(({openSearch, handleCloseSearch}, ref)
     )
 });
 
+PoppupSearchBox.displayName = 'PoppupSearchBox';
 export default PoppupSearchBox;
