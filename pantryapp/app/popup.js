@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import {useState} from 'react'
 import { Box, Stack, Typography, Button, Modal, TextField, Popper, Snackbar} from "@mui/material"
-import {firestore} from '@/firebase'
+import {firestore} from '@/app/firebase'
 import {collection} from 'firebase/firestore'
 import {doc, getDocs, query, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
 
