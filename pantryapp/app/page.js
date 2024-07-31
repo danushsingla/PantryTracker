@@ -127,7 +127,7 @@ export default function Home() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <PoppupSearchBox open={openSearch} handleCloseSearch={handleCloseSearch}/>
+          <PoppupSearchBox handleCloseSearch={handleCloseSearch}/>
         </Modal>
         <Button variant="contained"
           onClick={handleOpenSearch}

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useContext } from 'react'
 import {useState} from 'react'
 import { Box, Stack, Typography, Button, Modal, TextField, Popper, Snackbar} from "@mui/material"
 import {firestore} from '@/app/firebase'
@@ -18,14 +18,15 @@ const style = {
     p: 4,
 };
 
-export const PoppupSearchBox = forwardRef(({openSearch, handleCloseSearch}, ref) => {
+export const PoppupSearchBox = forwardRef(({handleCloseSearchProp}, ref) => {
     const [itemName, setItemName] = useState('');
     const [pantry, setPantry] = useState([])
     const [openError, setOpenError] = useState(false)
     const handleErrorClose = () => setOpenError(false);
-
-    // const [openSearch, setOpenSearch] = useState(true);
-    // const handleSearchClose = handleCloseSearch;
+    
+    const handleCloseSearch = () => {
+        handleCloseSearchProp();
+    };
 
     const searchItem = async (item) => {
         try{
