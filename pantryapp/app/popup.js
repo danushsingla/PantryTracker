@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { Box, Stack, Typography, Button, TextField, Snackbar} from "@mui/material"
-import {firestore} from '@/app/firebase'
+import {firestore} from '@/firebase'
 import {collection} from 'firebase/firestore'
 import {doc, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
 
