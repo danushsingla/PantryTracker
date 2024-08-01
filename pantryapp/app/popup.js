@@ -1,10 +1,9 @@
 "use client"
-import React, { forwardRef, useContext, useRef, useState } from 'react'
-import { Box, Stack, Typography, Button, Modal, TextField, Popper, Snackbar} from "@mui/material"
+import React, { useState } from 'react'
+import { Box, Stack, Typography, Button, TextField, Snackbar} from "@mui/material"
 import {firestore} from '@/app/firebase'
 import {collection} from 'firebase/firestore'
-import {doc, getDocs, query, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
-import { MyContext } from './MyContext';
+import {doc, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
 
 
 const style = {

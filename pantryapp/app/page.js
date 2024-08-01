@@ -2,10 +2,10 @@
 import { Box, Stack, Typography, Button, Modal, TextField } from "@mui/material"
 import {firestore} from '@/app/firebase'
 import {collection} from 'firebase/firestore'
-import { MyProvider } from './MyContext';
-import React, {useEffect, useState, createContext, useRef} from 'react'
+import React, {useEffect, useState} from 'react'
 import {doc, getDocs, query, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
 import { PoppupSearchBox } from "@/app/popup"
+import { CameraComponent } from "@/app/camera"
 
 const style = {
   position: 'absolute',
@@ -23,7 +23,6 @@ const style = {
 };
 
 export default function Home() {
-  const context = createContext()
   const [pantry, setPantry] = useState([])
 
   const [openAdd, setOpenAdd] = useState(false);
@@ -35,6 +34,13 @@ export default function Home() {
   const handleCloseSearch = () => setOpenSearch(false);
 
   const [itemName, setItemName] = useState('')
+
+  const [showCamera, setShowCamera] = useState(false);
+
+  // Function to toggle the visibility of CameraComponent
+  const toggleCamera = () => {
+    setShowCamera(!showCamera);
+  };
 
   const updatePantry = async () => {
     const snapshot = query(collection(firestore, 'pantry'))
@@ -99,23 +105,29 @@ export default function Home() {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Add Item
             </Typography>
-            <Stack width="100%" direction={'row'} spacing={2}>
-              <TextField
-                id="outlined-basic"
-                label="Item"
-                variant="outlined"
-                fullWidth
-                value={itemName}
-                onChange={(e) => setItemName(e.target.value)}
-              />
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  addItem(itemName)
-                  handleCloseAdd()
-                }}
-              >Add</Button>
-            </Stack>
+            <Box display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"} gap={2}>
+              <Stack width="100%" direction={'row'} spacing={2}>
+                <TextField
+                  id="outlined-basic"
+                  label="Item"
+                  variant="outlined"
+                  fullWidth
+                  value={itemName}
+                  onChange={(e) => setItemName(e.target.value)}
+                />
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    addItem(itemName)
+                    handleCloseAdd()
+                  }}
+                >Add</Button>
+              </Stack>
+              <Button variant="contained" onClick={toggleCamera}>
+                {showCamera ? 'Hide Camera' : 'Add Picture'}
+              </Button>
+              {showCamera && <CameraComponent />}
+            </Box>
           </Box>
         </Modal>
         <Button variant="contained"
