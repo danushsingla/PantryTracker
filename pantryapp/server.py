@@ -2,28 +2,40 @@ from flask import Flask, request, jsonify
 from ultralytics import YOLO
 from PIL import Image
 from flask_cors import CORS
+import numpy as np
+from PIL import Image
 import io
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/detect": {"origins": "http://localhost:3000"}})
 
-# Load the pre-trained YOLOv8 model
-model = YOLO('yolov8x.pt')  # You can use other versions of the model as well
+# Load the pre-trained MobileNetV2 model
+model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of the model as well
 
 @app.route('/api/detect', methods=['POST'])
 def detect_objects():
     try:
         # Get the image from the request
         file = request.files.get('image')
+        print(file)
         if not file:
             return jsonify({'error': 'No image file provided'}), 400
+        
 
-        image = Image.open(io.BytesIO(file.read()))
+        # Read the image file into a PIL Image
+        image = Image.open(file.stream)
+        # image = image.resize((640, 640))
 
-        # Perform object detection
-        results = model(image)
-        print(results)
-        exit()
+        # if image.mode != 'RGB':
+        #     image = image.convert('RGB')
+
+        # Convert PIL Image to an array if needed by YOLO model
+        image_np = np.array(image)
+
+        image_bgr = image_np[:, :, ::-1]
+        
+        results = model(image_bgr)
+
         results[0].show()
 
         return results[0].tojson()

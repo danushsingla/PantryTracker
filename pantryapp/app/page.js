@@ -1,11 +1,13 @@
 'use client'
-import { Box, Stack, Typography, Button, Modal, TextField } from "@mui/material"
+import { Box, Stack, Typography, Button, Modal, TextField, Snackbar } from "@mui/material"
 import {firestore} from '@/firebase'
 import {collection} from 'firebase/firestore'
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import {doc, getDocs, query, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
 import { PoppupSearchBox } from "@/app/popup"
 import { CameraComponent } from "@/app/camera"
+import { ConfirmItems } from "@/app/confirm_items"
+import debounce from 'lodash/debounce'; // Install lodash if not already
 
 const style = {
   position: 'absolute',
@@ -29,9 +31,25 @@ export default function Home() {
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
 
+  // For search functionality
   const [openSearch, setOpenSearch] = useState(false);
   const handleOpenSearch = () => setOpenSearch(true);
   const handleCloseSearch = () => setOpenSearch(false);
+
+  // Store items found from camera
+  const [cameraItems, setCameraItems] = useState([])
+  const [cameraHasItems, setCameraHasItems] = useState(false)
+
+  // For Errors
+  const [addError, setAddError] = useState(false)
+  const handleOpenAddError = () => setAddError(true)
+  const handleCloseAddError = () => setAddError(false)
+  
+  const handleCameraHasItems = () => {
+    setCameraHasItems(cameraHasItems ? false : true); // Toggle cameraHasItems
+    console.log(cameraHasItems)
+    setShowCamera(false);  // Hide the camera component after processing
+  };
 
   const [itemName, setItemName] = useState('')
 
@@ -56,18 +74,23 @@ export default function Home() {
     updatePantry()
   }, [])
 
-  const addItem = async (item) => {
-    const docRef = doc(collection(firestore, 'pantry'), item)
-    // Check if it exists
-    const docSnap = await getDoc(docRef)
-    if (docSnap.exists()) {
-      const count = docSnap.data().count + 1
-      await setDoc(docRef, {count})
-    } else{
-      await setDoc(docRef, {count: 1})
-    }
+  const addItem = async (item, counts = 1) => {
+    try{
+      const docRef = doc(collection(firestore, 'pantry'), item)
+      // Check if it exists
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists()) {
+        const count = docSnap.data().count + counts
+        await setDoc(docRef, {count})
+      } else{
+        await setDoc(docRef, {count: counts})
+      }
 
-    await updatePantry()
+      await updatePantry()
+    }
+    catch(e){
+      handleOpenAddError()
+    }
   }
 
   const removeItem = async (item) => {
@@ -83,6 +106,11 @@ export default function Home() {
       await updatePantry()
     }
   }
+
+  const onCameraClose = async (items) => {
+    console.log("In Camera Close")
+    console.log(items)
+  }
   
   return (
     <Box 
@@ -95,6 +123,13 @@ export default function Home() {
       gap={2}
     >
       <Box flexDirection={"row"} alignItems={"center"} justifyContent={"center"} display={"flex"} gap={2}>
+        <Snackbar
+            open={addError}
+            autoHideDuration={1000}
+            onClose={handleCloseAddError}
+            message="Cannot add item"
+            // action={action}
+        />
         <Modal
           open={openAdd}
           onClose={handleCloseAdd}
@@ -126,13 +161,14 @@ export default function Home() {
               <Button variant="contained" onClick={toggleCamera}>
                 {showCamera ? 'Hide Camera' : 'Add Picture'}
               </Button>
-              {showCamera && <CameraComponent />}
+              {showCamera && <CameraComponent handleCameraHasItems={handleCameraHasItems} handleCloseAdd={handleCloseAdd} setCameraItems={setCameraItems}/>}
             </Box>
           </Box>
         </Modal>
         <Button variant="contained"
           onClick={handleOpenAdd}
         >Add</Button>
+        
 
         <Modal
           open={openSearch}
@@ -146,6 +182,8 @@ export default function Home() {
           onClick={handleOpenSearch}
         >Search</Button>
       </Box>
+
+      {cameraHasItems && <ConfirmItems cameraItems={cameraItems} addItem={addItem} handleCameraHasItems={handleCameraHasItems}/>}
 
       <Box border={'1px solid #333'}>
         <Box width="800px" height="100px" bgcolor={"#ADD8E6"} display={'flex'} justifyContent={'center'} alignItems={'center'}>

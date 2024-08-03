@@ -4,7 +4,7 @@ import { Box, Button } from "@mui/material";
 import { storage } from "@/firebase";
 import { ref, uploadBytesResumable } from "firebase/storage";
 
-export const CameraComponent = () => {
+export const CameraComponent = ({handleCloseAdd, setCameraItems, handleCameraHasItems}) => {
   const camera = useRef(null);
   const [image, setImage] = useState(null);
   const[pictureTaken, setPictureTaken] = useState(false);
@@ -31,6 +31,7 @@ export const CameraComponent = () => {
     if (image) {
       try {
         const blob = dataURLToBlob(image);
+        console.log(blob)
   
         const formData = new FormData();
         formData.append("image", blob, "photo.jpg");
@@ -43,6 +44,12 @@ export const CameraComponent = () => {
         if (response.ok) {
           const data = await response.json();
           console.log("Detection Results:", data);
+
+          setCameraItems(data);
+
+          // Close the camera since we are done here
+          handleCloseAdd()
+          handleCameraHasItems()
         } else {
           console.error("Failed to send image to backend");
         }
