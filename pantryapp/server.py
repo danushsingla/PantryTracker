@@ -4,10 +4,14 @@ from PIL import Image
 from flask_cors import CORS
 import numpy as np
 from PIL import Image
+import os
 import io
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/detect": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/api/detect": {"origins": os.getenv.NEXT_PUBLIC_BACKEND_API_URL}})
 
 # Load the pre-trained MobileNetV2 model
 model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of the model as well

@@ -35,8 +35,9 @@ export const CameraComponent = ({handleCloseAdd, setCameraItems, handleCameraHas
   
         const formData = new FormData();
         formData.append("image", blob, "photo.jpg");
+
   
-        const response = await fetch("http://localhost:5000/api/detect", {
+        const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API_URL, {
           method: "POST",
           body: formData,
         });
