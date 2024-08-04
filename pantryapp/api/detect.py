@@ -7,12 +7,13 @@ from PIL import Image
 import os
 from dotenv import load_dotenv, find_dotenv
 from flask import jsonify
-# from waitress import serve
+from waitress import serve
 
 
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
+print(os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL"))
 CORS(app, resources={r"/api/detect": {"origins": os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL")}})
 
 # Load the pre-trained MobileNetV2 model
@@ -23,7 +24,6 @@ def detect_objects():
     try:
         # Get the image from the request
         file = request.files.get('image')
-        print(file)
         if not file:
             return jsonify({'error': 'No image file provided'}), 400
         
@@ -47,5 +47,5 @@ def detect_objects():
         print(f"Error processing image: {e}")
         return jsonify({'error': str(e)}), 500
 
-# if __name__ == '__main__':
-    # serve(app, host="0.0.0.0", port=8080)
+if __name__ == '__main__':
+    serve(app, host="0.0.0.0", port=8080)

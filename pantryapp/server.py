@@ -21,6 +21,7 @@ CORS(app)
 # Load the pre-trained MobileNetV2 model
 model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of the model as well
 
+
 @app.route('/api/detect', methods=['POST'])
 def detect_objects():
     try:
