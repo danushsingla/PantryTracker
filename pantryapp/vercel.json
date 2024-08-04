@@ -10,14 +10,14 @@
         "use": "@vercel/python"
       }
     ],
-    "routes": [
+    "rewrites": [
       {
-        "src": "/api/(.*)",
-        "dest": "/api/detect.py"
+        "source": "/api/(.*)",
+        "destination": "/api/detect.py"
       },
       {
-        "src": "/(.*)",
-        "dest": "/"
+        "source": "/(.*)",
+        "destination": "/"
       }
     ]
   }
