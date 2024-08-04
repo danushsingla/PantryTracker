@@ -38,8 +38,13 @@ export const CameraComponent = ({handleCloseAdd, setCameraItems, handleCameraHas
 
   
         const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API_URL, {
+          mode: "cors",
           method: "POST",
           body: formData,
+          headers: { 
+            "Access-Control-Allow-Origin": "*",
+            "Accept": "application/json"
+          }
         });
   
         if (response.ok) {
