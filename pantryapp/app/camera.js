@@ -38,7 +38,7 @@ export const CameraComponent = ({handleCloseAdd, setCameraItems, handleCameraHas
 
   
         const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API_URL, {
-          method: "GET",
+          method: "POST",
           body: formData,
         });
   
