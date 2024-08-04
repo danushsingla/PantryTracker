@@ -39,10 +39,9 @@ export const CameraComponent = ({handleCloseAdd, setCameraItems, handleCameraHas
         // console.log(process.env.NEXT_PUBLIC_BACKEND_API_URL)
 
   
-        const response = await fetch('https://pantry-tracker-phi.vercel.app', {
+        const response = await fetch('https://pantry-tracker-phi.vercel.app/api/detect', {
           method: "POST",
           body: formData,
-          contentType: "application/json",
         });
   
         if (response.ok) {
