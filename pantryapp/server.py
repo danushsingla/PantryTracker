@@ -42,8 +42,6 @@ def detect_objects():
         
         results = model(image_bgr)
 
-        results[0].show()
-
         return results[0].tojson()
     except Exception as e:
         print(f"Error processing image: {e}")
