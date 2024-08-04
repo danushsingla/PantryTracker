@@ -7,7 +7,7 @@ from PIL import Image
 import os
 from dotenv import load_dotenv, find_dotenv
 from flask import jsonify
-from waitress import serve
+# from waitress import serve
 
 load_dotenv(find_dotenv())
 
@@ -46,5 +46,5 @@ def detect_objects():
         print(f"Error processing image: {e}")
         return jsonify({'error': str(e)}), 500
 
-if __name__ == '__main__':
-    serve(app, host="0.0.0.0", port=8080)
+# if __name__ == '__main__':
+#     serve(app, host="0.0.0.0", port=8080)
