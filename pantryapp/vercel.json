@@ -13,7 +13,7 @@
     "rewrites": [
       {
         "source": "/api/(.*)",
-        "destination": "https://pantry-tracker-phi.vercel.app/"
+        "destination": "/api/detect"
       }
     ]
   }
