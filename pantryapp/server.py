@@ -7,6 +7,8 @@ from PIL import Image
 import os
 import io
 from dotenv import load_dotenv, find_dotenv
+import json
+from flask import jsonify
 
 
 load_dotenv(find_dotenv())
@@ -42,7 +44,7 @@ def detect_objects():
         
         results = model(image_bgr)
 
-        return results[0].tojson()
+        return jsonify(results[0].tojson())
     except Exception as e:
         print(f"Error processing image: {e}")
         return jsonify({'error': str(e)}), 500
