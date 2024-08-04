@@ -37,7 +37,7 @@ export const CameraComponent = ({handleCloseAdd, setCameraItems, handleCameraHas
         formData.append("image", blob, "photo.jpg");
 
   
-        const response = await fetch(process.env.NEXT_PUBLIC_FRONTEND_API_URL, {
+        const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API_URL, {
           method: "POST",
           body: formData,
         });
