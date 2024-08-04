@@ -12,8 +12,8 @@
     ],
     "routes": [
       {
-        "source": "/api/(.*)",
-        "destination": "/api/detect"
+        "src": "/api/(.*)",
+        "dest": "/api/detect"
       }
     ]
   }
