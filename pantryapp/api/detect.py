@@ -9,12 +9,11 @@ from dotenv import load_dotenv, find_dotenv
 from flask import jsonify
 from waitress import serve
 
-
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
 # print(os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL"))
-CORS(app, resources={r"/api/detect": {"origins": 'https://pantry-tracker-phi.vercel.app'}})
+CORS(app, resources={r"/api/detect": {"origins": 'https://pantry-tracker-phi.vercel.app/api/detect'}})
 
 # Load the pre-trained MobileNetV2 model
 model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of the model as well
