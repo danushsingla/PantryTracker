@@ -49,6 +49,14 @@ def detect_objects():
     except Exception as e:
         print(f"Error processing image: {e}")
         return jsonify({'error': str(e)}), 500
+    
+def main():
+    return app
+
+def handler(event, context):
+    from werkzeug.serving import run_simple
+    app = main()
+    run_simple('0.0.0.0', 8080, app)
 
 if __name__ == '__main__':
     serve(app, host="0.0.0.0", port=8080)
