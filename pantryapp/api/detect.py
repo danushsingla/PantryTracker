@@ -5,18 +5,15 @@ from flask_cors import CORS
 import numpy as np
 from PIL import Image
 import os
-import io
 from dotenv import load_dotenv, find_dotenv
-import json
 from flask import jsonify
-from waitress import serve
+# from waitress import serve
 
 
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
-# CORS(app, resources={r"/api/detect": {"origins": os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL")}})
-CORS(app)
+CORS(app, resources={r"/api/detect": {"origins": os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL")}})
 
 # Load the pre-trained MobileNetV2 model
 model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of the model as well
@@ -49,14 +46,6 @@ def detect_objects():
     except Exception as e:
         print(f"Error processing image: {e}")
         return jsonify({'error': str(e)}), 500
-    
-def main():
-    return app
-
-def handler(event, context):
-    from werkzeug.serving import run_simple
-    app = main()
-    run_simple('0.0.0.0', 8080, app)
 
 if __name__ == '__main__':
-    serve(app, host="0.0.0.0", port=8080)
+    # serve(app, host="0.0.0.0", port=8080)
