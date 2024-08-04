@@ -10,10 +10,10 @@ from dotenv import load_dotenv, find_dotenv
 
 
 load_dotenv(find_dotenv())
-print(os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL"))
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/detect": {"origins": os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL")}})
+# CORS(app, resources={r"/api/detect": {"origins": os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL")}})
+CORS(app)
 
 # Load the pre-trained MobileNetV2 model
 model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of the model as well
