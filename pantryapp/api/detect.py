@@ -22,7 +22,7 @@ model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of th
 def detect():
     try:
         # Get the image from the request
-        file = request.files.get('image')
+        file = request.files.form('image')
         if not file:
             return jsonify({'error': 'No image file provided'}), 400
         
