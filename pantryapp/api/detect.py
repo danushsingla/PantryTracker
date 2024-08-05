@@ -18,7 +18,7 @@ CORS(app, resources={r"/api/detect": {"origins": 'https://pantry-tracker-phi.ver
 # Load the pre-trained MobileNetV2 model
 model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of the model as well
 
-@app.route('/api/detect', methods=['POST'])
+@app.route('/api/detect', methods=['GET', 'POST'])
 def detect_objects():
     try:
         # Get the image from the request
