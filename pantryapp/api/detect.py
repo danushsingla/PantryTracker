@@ -19,7 +19,7 @@ CORS(app, resources={r"/api/detect": {"origins": 'https://pantry-tracker-phi.ver
 model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of the model as well
 
 @app.route('/api/detect', methods=['GET', 'POST'])
-def detect_objects():
+def detect():
     try:
         # Get the image from the request
         file = request.files.get('image')
