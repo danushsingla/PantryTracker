@@ -3,10 +3,7 @@ from ultralytics import YOLO
 from PIL import Image
 from flask_cors import CORS
 import numpy as np
-from PIL import Image
-import os
 from dotenv import load_dotenv, find_dotenv
-from flask import jsonify
 # from waitress import serve
 
 load_dotenv(find_dotenv())
