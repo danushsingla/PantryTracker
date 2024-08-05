@@ -23,7 +23,7 @@ model = YOLO(r"pantryapp/yolov8_weights.pt")  # You can use other versions of th
 def detect():
     try:
         # Get the image from the request
-        file = request.files.form('image')
+        file = request.files.get('image')
         if not file:
             return jsonify({'error': 'No image file provided'}), 400
         
@@ -47,5 +47,5 @@ def detect():
         print(f"Error processing image: {e}")
         return jsonify({'error': str(e)}), 500
 
-# if __name__ == '__main__':
-#     serve(app, host="0.0.0.0", port=8080)
+if __name__ == '__main__':
+    app.run(debug=True)
