@@ -12,6 +12,7 @@ from flask import jsonify
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 # print(os.environ.get("NEXT_PUBLIC_FRONTEND_API_URL"))
 CORS(app, resources={r"/api/detect": {"origins": 'https://pantry-tracker-phi.vercel.app'}})
 
